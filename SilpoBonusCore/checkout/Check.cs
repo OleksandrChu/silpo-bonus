@@ -10,7 +10,6 @@ namespace SilpoBonusCore.checkout
 
         public int GetTotalCost() => products.Sum(product => product.price);
         internal void AddProduct(Product product) => products.Add(product);
-
         public int GetTotalPoints() => GetTotalCost() + points;
 
         internal void AddPoints(int points) => this.points += points;

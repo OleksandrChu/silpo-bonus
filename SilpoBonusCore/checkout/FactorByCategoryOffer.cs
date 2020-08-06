@@ -2,8 +2,8 @@ namespace SilpoBonusCore.checkout
 {
     public class FactorByCategoryOffer : Offer
     {
-        internal readonly Category category;
-        internal readonly int factor;
+        private readonly Category category;
+        private int factor;
 
         public FactorByCategoryOffer(Category category, int factor)
         {
@@ -13,7 +13,7 @@ namespace SilpoBonusCore.checkout
 
         public override void Apply(Check check)
         {
-            check.AddPoints(check.GetCostByCategory(category));
+            check.AddPoints(check.GetCostByCategory(category) * (this.factor - 1));
         }
     }
 }

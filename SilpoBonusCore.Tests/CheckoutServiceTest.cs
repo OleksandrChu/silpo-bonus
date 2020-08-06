@@ -73,10 +73,10 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
             checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
             checkoutService.AddProduct(new Product(3, "Bread"));
-            checkoutService.UseOffer(new FactorByCategoryOffer(Category.Milk, 2));
+            checkoutService.UseOffer(new FactorByCategoryOffer(Category.Milk, 3));
 
             Check check = checkoutService.CloseCheck();
-            Assert.Equal(31, check.GetTotalPoints());
+            Assert.Equal(45, check.GetTotalPoints());
         }
     }
 }
