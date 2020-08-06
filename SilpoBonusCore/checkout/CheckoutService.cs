@@ -5,10 +5,7 @@ namespace SilpoBonusCore.checkout
     public class CheckoutService
     {
         private Check check;
-        public void OpenCheck()
-        {
-            check = new Check();
-        }
+        public void OpenCheck() => check = new Check();
 
         public void AddProduct(Product product)
         {
@@ -26,13 +23,9 @@ namespace SilpoBonusCore.checkout
             return closedCheck;
         }
 
-        public void UseOffer(AnyGoodOffer offer)
+        public void UseOffer(Offer offer)
         {
-            if (check.GetTotalCost() >= offer.totalCost)
-            {
-                check.AddPoints(offer.points);
-            }
-
+            offer.Apply(check);
         }
     }
 }

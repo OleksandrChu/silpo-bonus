@@ -15,19 +15,24 @@ namespace SilpoBonusCore.checkout
             return totalCost;
         }
 
-        internal void AddProduct(Product product)
-        {
-            products.Add(product);
-        }
+        internal void AddProduct(Product product) =>products.Add(product);
 
-        public int GetTotalPoints()
-        {
-            return GetTotalCost() + points;
-        }
+        public int GetTotalPoints() => GetTotalCost() + points;
 
-        public void AddPoints(int points)
+        public void AddPoints(int points) => this.points += points;
+
+        internal int GetCostByCategory(Category category)
         {
-            this.points += points;
+            int cost = 0;
+            foreach (Product product in products)
+            {
+                if (product.category == category)
+                {
+                    cost += product.price;
+                }
+            }
+
+            return cost;
         }
     }
 }

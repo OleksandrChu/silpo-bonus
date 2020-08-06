@@ -1,14 +1,22 @@
-namespace SilpoBonusCore
+namespace SilpoBonusCore.checkout
 {
-    public class AnyGoodOffer
+    public class AnyGoodOffer : Offer
     {
-        public readonly int totalCost;
-        public readonly int points;
+        private readonly int totalCost;
+        private readonly int points;
 
         public AnyGoodOffer(int totalCost, int points)
         {
             this.totalCost = totalCost;
             this.points = points;
+        }
+
+        public override void Apply(Check check)
+        {
+            if (check.GetTotalCost() >= totalCost)
+            {
+                check.AddPoints(points);
+            }
         }
     }
 }
