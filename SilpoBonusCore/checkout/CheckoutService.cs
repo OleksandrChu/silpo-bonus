@@ -23,9 +23,8 @@ namespace SilpoBonusCore.checkout
             return closedCheck;
         }
 
-        public void UseOffer(Offer offer)
-        {
-            offer.Apply(check);
-        }
+        public void UseOffer() => check.UseOffers();
+
+        public void AddOffer(Offer offer) => check.AddOffer(offer);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using SilpoBonusCore.checkout;
 using Xunit;
 
@@ -5,6 +6,8 @@ namespace SilpoBonusCore.Tests
 {
     public class CheckoutServiceTest
     {
+        private DateTime expirationDate = new DateTime(2020, 8, 10);
+        
         [Fact]
         public void Close_check_withOneProduct()
         {
@@ -50,8 +53,9 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(new Product(7, "Milk"));
             checkoutService.AddProduct(new Product(7, "Milk"));
             Check check = checkoutService.CloseCheck();
-            // Assert.Equal(21, check.GetTotalPoints());
+            Assert.Equal(21, check.GetTotalPoints());
         }
+
         [Fact]
         public void UseOffer_AddOfferPoints()
         {
@@ -59,8 +63,8 @@ namespace SilpoBonusCore.Tests
             checkoutService.OpenCheck();
             checkoutService.AddProduct(new Product(7, "Milk"));
             checkoutService.AddProduct(new Product(3, "Bread"));
-            checkoutService.UseOffer(new AnyGoodOffer(7, 10));
-
+            checkoutService.AddOffer(new AnyGoodOffer(7, 10, DateTime.Now));
+            checkoutService.UseOffer();
             Check check = checkoutService.CloseCheck();
             Assert.Equal(20, check.GetTotalPoints());
         }
@@ -73,8 +77,22 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
             checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
             checkoutService.AddProduct(new Product(3, "Bread"));
-            checkoutService.UseOffer(new FactorByCategoryOffer(Category.Milk, 3));
+            checkoutService.UseOffer();
+            Check check = checkoutService.CloseCheck();
+            Assert.Equal(17, check.GetTotalPoints());
+        }
 
+        [Fact]
+        public void UseOffers_BeforeCheckWasClosed()
+        {
+            CheckoutService checkoutService = new CheckoutService();
+            checkoutService.OpenCheck();
+            checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
+            checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
+            checkoutService.AddProduct(new Product(3, "Bread"));
+            checkoutService.AddOffer(new FactorByCategoryOffer(Category.Milk, 3, expirationDate));
+            checkoutService.AddOffer(new AnyGoodOffer(40, 5, expirationDate));
+            checkoutService.UseOffer();
             Check check = checkoutService.CloseCheck();
             Assert.Equal(45, check.GetTotalPoints());
         }

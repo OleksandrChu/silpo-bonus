@@ -1,3 +1,5 @@
+using System;
+
 namespace SilpoBonusCore.checkout
 {
     public class FactorByCategoryOffer : Offer
@@ -5,10 +7,11 @@ namespace SilpoBonusCore.checkout
         private readonly Category category;
         private int factor;
 
-        public FactorByCategoryOffer(Category category, int factor)
+        public FactorByCategoryOffer(Category category, int factor, DateTime expirationDate)
         {
             this.category = category;
             this.factor = factor;
+            this.expirationDate = expirationDate;
         }
 
         public override void Apply(Check check)

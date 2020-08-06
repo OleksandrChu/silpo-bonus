@@ -1,11 +1,13 @@
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace SilpoBonusCore.checkout
 {
     public class Check
     {
         private List<Product> products = new List<Product>();
+        private List<Offer> offers = new List<Offer>();
         private int points = 0;
 
         public int GetTotalCost() => products.Sum(product => product.price);
@@ -20,5 +22,9 @@ namespace SilpoBonusCore.checkout
             .Where(product => product.category.Equals(category))
             .Sum(product => product.price);
         }
+
+        internal void AddOffer(Offer offer) => offers.Add(offer);
+
+        internal void UseOffers() => offers.ForEach(offer => offer.TryToApply(this));
     }
 }
