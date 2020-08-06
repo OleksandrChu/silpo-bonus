@@ -9,14 +9,13 @@ namespace SilpoBonusCore.checkout
 
         public void TryToApply(Check check)
         {
-            var t = IsNotExpired();
             if (IsNotExpired())
             {
                 Apply(check);
             }
         }
 
-        private bool IsNotExpired() 
+        private bool IsNotExpired()
         {
             TimeSpan timeSpan = expirationDate - DateTime.Now;
             return timeSpan.Days >= 0;
