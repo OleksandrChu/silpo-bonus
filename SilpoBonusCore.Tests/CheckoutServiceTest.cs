@@ -64,7 +64,6 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(new Product(7, "Milk"));
             checkoutService.AddProduct(new Product(3, "Bread"));
             checkoutService.AddOffer(new AnyGoodOffer(7, 10, DateTime.Now));
-            checkoutService.UseOffer();
             Check check = checkoutService.CloseCheck();
             Assert.Equal(20, check.GetTotalPoints());
         }
@@ -77,7 +76,6 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
             checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
             checkoutService.AddProduct(new Product(3, "Bread"));
-            checkoutService.UseOffer();
             Check check = checkoutService.CloseCheck();
             Assert.Equal(17, check.GetTotalPoints());
         }
@@ -92,7 +90,6 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(new Product(3, "Bread"));
             checkoutService.AddOffer(new FactorByCategoryOffer(Category.Milk, 3, expirationDate));
             checkoutService.AddOffer(new AnyGoodOffer(40, 5, expirationDate));
-            checkoutService.UseOffer();
             Check check = checkoutService.CloseCheck();
             Assert.Equal(45, check.GetTotalPoints());
         }

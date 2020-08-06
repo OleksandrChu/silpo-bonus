@@ -18,12 +18,13 @@ namespace SilpoBonusCore.checkout
 
         public Check CloseCheck()
         {
+            UseOffer();
             var closedCheck = check;
             check = null;
             return closedCheck;
         }
 
-        public void UseOffer() => check.UseOffers();
+        private void UseOffer() => check.UseOffers();
 
         public void AddOffer(Offer offer) => check.AddOffer(offer);
     }
