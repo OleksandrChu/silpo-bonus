@@ -7,13 +7,25 @@ namespace SilpoBonusCore.Tests
     public class CheckoutServiceTest
     {
         private DateTime expirationDate = new DateTime(2020, 8, 10);
-        
+        private CheckoutService checkoutService;
+        private Check check;
+
+        private Product milk;
+        private Product bread;
+
+        public CheckoutServiceTest()
+        {
+            checkoutService = new CheckoutService();
+            milk = new Product(7, "Milk", Category.Milk);
+            bread = new Product(3, "Bread");
+        }
+
         [Fact]
         public void Close_check_withOneProduct()
         {
             CheckoutService checkoutService = new CheckoutService();
             checkoutService.OpenCheck();
-            checkoutService.AddProduct(new Product(7, "Milk"));
+            checkoutService.AddProduct(milk);
             Check check = checkoutService.CloseCheck();
 
             Assert.Equal(7, check.GetTotalCost());
@@ -22,24 +34,22 @@ namespace SilpoBonusCore.Tests
         [Fact]
         public void Close_check_withTwoProduct()
         {
-            CheckoutService checkoutService = new CheckoutService();
             checkoutService.OpenCheck();
-            checkoutService.AddProduct(new Product(7, "Milk"));
-            checkoutService.AddProduct(new Product(3, "Bread"));
-            Check check = checkoutService.CloseCheck();
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
+            check = checkoutService.CloseCheck();
             Assert.Equal(10, check.GetTotalCost());
         }
 
         [Fact]
         public void Addproduct_whenCheckClosed_openNewCheck()
         {
-            CheckoutService checkoutService = new CheckoutService();
             checkoutService.OpenCheck();
-            checkoutService.AddProduct(new Product(7, "Milk"));
+            checkoutService.AddProduct(milk);
             Check milkCheck = checkoutService.CloseCheck();
             Assert.Equal(7, milkCheck.GetTotalCost());
 
-            checkoutService.AddProduct(new Product(3, "Bread"));
+            checkoutService.AddProduct(bread);
             Check breadCheck = checkoutService.CloseCheck();
             Assert.Equal(3, breadCheck.GetTotalCost());
         }
@@ -47,11 +57,10 @@ namespace SilpoBonusCore.Tests
         [Fact]
         public void CloseCheck_CalcTotalPoints()
         {
-            CheckoutService checkoutService = new CheckoutService();
             checkoutService.OpenCheck();
-            checkoutService.AddProduct(new Product(7, "Milk"));
-            checkoutService.AddProduct(new Product(7, "Milk"));
-            checkoutService.AddProduct(new Product(7, "Milk"));
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(milk);
             Check check = checkoutService.CloseCheck();
             Assert.Equal(21, check.GetTotalPoints());
         }
@@ -59,23 +68,21 @@ namespace SilpoBonusCore.Tests
         [Fact]
         public void UseOffer_AddOfferPoints()
         {
-            CheckoutService checkoutService = new CheckoutService();
             checkoutService.OpenCheck();
-            checkoutService.AddProduct(new Product(7, "Milk"));
-            checkoutService.AddProduct(new Product(3, "Bread"));
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
             checkoutService.AddOffer(new AnyGoodOffer(7, 10, DateTime.Now));
-            Check check = checkoutService.CloseCheck();
+            check = checkoutService.CloseCheck();
             Assert.Equal(20, check.GetTotalPoints());
         }
 
         [Fact]
         public void UseOffer_FactorByCategory()
         {
-            CheckoutService checkoutService = new CheckoutService();
             checkoutService.OpenCheck();
-            checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
-            checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
-            checkoutService.AddProduct(new Product(3, "Bread"));
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
             Check check = checkoutService.CloseCheck();
             Assert.Equal(17, check.GetTotalPoints());
         }
@@ -83,14 +90,13 @@ namespace SilpoBonusCore.Tests
         [Fact]
         public void UseOffers_BeforeCheckWasClosed()
         {
-            CheckoutService checkoutService = new CheckoutService();
             checkoutService.OpenCheck();
-            checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
-            checkoutService.AddProduct(new Product(7, "Milk", Category.Milk));
-            checkoutService.AddProduct(new Product(3, "Bread"));
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
             checkoutService.AddOffer(new FactorByCategoryOffer(Category.Milk, 3, expirationDate));
             checkoutService.AddOffer(new AnyGoodOffer(40, 5, expirationDate));
-            Check check = checkoutService.CloseCheck();
+            check = checkoutService.CloseCheck();
             Assert.Equal(45, check.GetTotalPoints());
         }
     }
