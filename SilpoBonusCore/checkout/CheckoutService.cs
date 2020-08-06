@@ -1,6 +1,6 @@
 using System;
 
-namespace SilpoBonusCore
+namespace SilpoBonusCore.checkout
 {
     public class CheckoutService
     {
@@ -12,13 +12,27 @@ namespace SilpoBonusCore
 
         public void AddProduct(Product product)
         {
+            if (check == null)
+            {
+                OpenCheck();
+            }
             check.AddProduct(product);
         }
 
         public Check CloseCheck()
         {
-            // check = new Check();
-            return check;
+            var closedCheck = check;
+            check = null;
+            return closedCheck;
+        }
+
+        public void UseOffer(AnyGoodOffer offer)
+        {
+            if (check.GetTotalCost() >= offer.totalCost)
+            {
+                check.AddPoints(offer.points);
+            }
+
         }
     }
 }

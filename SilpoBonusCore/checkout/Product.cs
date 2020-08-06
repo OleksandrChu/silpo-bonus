@@ -1,4 +1,4 @@
-namespace SilpoBonusCore
+namespace SilpoBonusCore.checkout
 {
     public class Product
     {

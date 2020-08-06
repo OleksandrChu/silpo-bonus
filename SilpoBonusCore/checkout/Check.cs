@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace SilpoBonusCore
+namespace SilpoBonusCore.checkout
 {
     public class Check
     {
         private List<Product> products = new List<Product>();
-        private int totalCost;
+        private int points = 0;
+
         public int GetTotalCost()
         {
             int totalCost = 0;
@@ -19,5 +20,14 @@ namespace SilpoBonusCore
             products.Add(product);
         }
 
+        public int GetTotalPoints()
+        {
+            return GetTotalCost() + points;
+        }
+
+        public void AddPoints(int points)
+        {
+            this.points += points;
+        }
     }
 }
