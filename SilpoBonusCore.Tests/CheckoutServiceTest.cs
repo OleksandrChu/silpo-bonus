@@ -11,14 +11,13 @@ namespace SilpoBonusCore.Tests
         private DateTime expirationDate = new DateTime(2020, 8, 10);
         private CheckoutService checkoutService;
         private Check check;
-
         private Product milk;
         private Product bread;
 
         public CheckoutServiceTest()
         {
             checkoutService = new CheckoutService();
-            milk = new Product(7, "Milk", Category.Milk);
+            milk = new Product(7, "Milk", Category.Milk, Trade.VoloshkolePole);
             bread = new Product(3, "Bread");
         }
 
@@ -100,6 +99,31 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddOffer(new AnyGoodOffer(40, 5, expirationDate));
             check = checkoutService.CloseCheck();
             Assert.Equal(45, check.GetTotalPoints());
+        }
+
+        [Fact]
+        public void UseOffer_ByTradeOrCategory()
+        {
+            checkoutService.OpenCheck();
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
+            checkoutService.AddOffer(new FactorByTradeOffer(Trade.VoloshkolePole, 2, expirationDate));
+
+            check = checkoutService.CloseCheck();
+            Assert.Equal(31, check.GetTotalPoints());
+        }
+
+           [Fact]
+        public void UseDicountOffer_ByCategory()
+        {
+            checkoutService.OpenCheck();
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
+            checkoutService.AddOffer(new DiscountOffer(50, Category.Milk, expirationDate));
+            check = checkoutService.CloseCheck();
+            Assert.Equal(10, check.GetTotalCost());
         }
     }
 }

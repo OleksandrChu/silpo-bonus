@@ -4,26 +4,27 @@ using SilpoBonusCore.models;
 
 namespace SilpoBonusCore.offers
 {
-    public class FactorByCategoryOffer : Offer
+    public class FactorByTradeOffer : Offer
     {
-        private Category category;
+        private Trade trade;
         private int factor;
         private int cost;
-        public FactorByCategoryOffer(Category category, int factor, DateTime expirationDate)
+
+        public FactorByTradeOffer(Trade trade, int factor, DateTime expirationDate)
         {
-            this.category = category;
+            this.trade = trade;
             this.factor = factor;
             this.expirationDate = expirationDate;
         }
 
         public override void Apply(Check check)
         {
-            check.AddPoints(check.GetCostByCategory(category) * (this.factor - 1));
+            check.AddPoints(cost * (this.factor - 1));
         }
 
         public override bool IsSatisfyCondition(Check check)
         {
-            cost = check.GetCostByCategory(category);
+            cost = check.GetCostByTrade(trade);
             return cost > 0;
         }
     }

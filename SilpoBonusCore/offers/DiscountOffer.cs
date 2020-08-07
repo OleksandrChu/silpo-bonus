@@ -4,21 +4,22 @@ using SilpoBonusCore.models;
 
 namespace SilpoBonusCore.offers
 {
-    public class FactorByCategoryOffer : Offer
+    public class DiscountOffer : Offer
     {
+        private int percent;
         private Category category;
-        private int factor;
         private int cost;
-        public FactorByCategoryOffer(Category category, int factor, DateTime expirationDate)
+
+        public DiscountOffer(int percent, Category category, DateTime expirationDate)
         {
+            this.percent = percent;
             this.category = category;
-            this.factor = factor;
             this.expirationDate = expirationDate;
         }
 
         public override void Apply(Check check)
         {
-            check.AddPoints(check.GetCostByCategory(category) * (this.factor - 1));
+            check.AddDiscount(cost * percent / 100);
         }
 
         public override bool IsSatisfyCondition(Check check)
