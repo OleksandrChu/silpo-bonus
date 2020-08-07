@@ -1,4 +1,4 @@
-namespace SilpoBonusCore.checkout
+namespace SilpoBonusCore.models
 {
     public enum Category
     {

@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using SilpoBonusCore.offers;
+using SilpoBonusCore.models;
 
 namespace SilpoBonusCore.checkout
 {

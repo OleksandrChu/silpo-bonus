@@ -1,6 +1,7 @@
 using System;
+using SilpoBonusCore.checkout;
 
-namespace SilpoBonusCore.checkout
+namespace SilpoBonusCore.offers
 {
     public class AnyGoodOffer : Offer
     {
@@ -18,6 +19,11 @@ namespace SilpoBonusCore.checkout
             {
                 check.AddPoints(points);
             }
+        }
+
+        public override bool IsSatisfyCondition(Check check)
+        {
+            return check.GetTotalCost() >= totalCost;
         }
     }
 }

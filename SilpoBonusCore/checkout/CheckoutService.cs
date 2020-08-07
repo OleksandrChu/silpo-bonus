@@ -1,4 +1,5 @@
 using System;
+using SilpoBonusCore.offers;
 
 namespace SilpoBonusCore.checkout
 {

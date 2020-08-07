@@ -1,5 +1,7 @@
 using System;
 using SilpoBonusCore.checkout;
+using SilpoBonusCore.models;
+using SilpoBonusCore.offers;
 using Xunit;
 
 namespace SilpoBonusCore.Tests

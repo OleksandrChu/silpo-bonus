@@ -1,3 +1,5 @@
+using SilpoBonusCore.models;
+
 namespace SilpoBonusCore.checkout
 {
     public class Product
