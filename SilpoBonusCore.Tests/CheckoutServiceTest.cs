@@ -114,7 +114,7 @@ namespace SilpoBonusCore.Tests
             Assert.Equal(31, check.GetTotalPoints());
         }
 
-           [Fact]
+        [Fact]
         public void UseDicountOffer_ByCategory()
         {
             checkoutService.OpenCheck();
@@ -124,6 +124,17 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddOffer(new DiscountOffer(50, Category.Milk, expirationDate));
             check = checkoutService.CloseCheck();
             Assert.Equal(10, check.GetTotalCost());
+        }
+
+        [Fact]
+        public void UseBonusOffer_ByCategory()
+        {
+            checkoutService.OpenCheck();
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
+            checkoutService.AddOffer(new BonusOffer(2, milk, expirationDate));
+            check = checkoutService.CloseCheck();
+            Assert.Equal(12, check.GetTotalCost());
         }
     }
 }
