@@ -1,5 +1,6 @@
 using System;
 using SilpoBonusCore.checkout;
+using SilpoBonusCore.condition;
 
 namespace SilpoBonusCore.offers
 {
@@ -7,6 +8,8 @@ namespace SilpoBonusCore.offers
     public abstract class Offer
     {
         protected DateTime expirationDate;
+        protected ICondition condition;
+        
         public abstract void Apply(Check check);
 
         public abstract bool IsSatisfyCondition(Check check);

@@ -2,13 +2,15 @@ using System;
 using SilpoBonusCore.checkout;
 using SilpoBonusCore.models;
 using SilpoBonusCore.offers;
+using SilpoBonusCore.rewards;
+using SilpoBonusCore.condition;
 using Xunit;
 
 namespace SilpoBonusCore.Tests
 {
     public class CheckoutServiceTest
     {
-        private DateTime expirationDate = new DateTime(2020, 8, 10);
+        private DateTime expirationDate = DateTime.Now.AddDays(10);
         private CheckoutService checkoutService;
         private Check check;
         private Product milk;
@@ -127,14 +129,38 @@ namespace SilpoBonusCore.Tests
         }
 
         [Fact]
-        public void UseBonusOffer_ByCategory()
+        public void UseFlatBonusOffer_ByCategory()
         {
             checkoutService.OpenCheck();
             checkoutService.AddProduct(milk);
             checkoutService.AddProduct(bread);
-            checkoutService.AddOffer(new BonusOffer(2, milk, expirationDate));
+            checkoutService.AddOffer(new BonusOffer(new Flat(20), new CategoryCondition(Category.Milk), expirationDate));
             check = checkoutService.CloseCheck();
-            Assert.Equal(12, check.GetTotalCost());
+            Assert.Equal(30, check.GetTotalPoints());
         }
+
+        [Fact]
+        public void UseFlatBonusOffer_WhenTotalCostGraterThen_20()
+        {
+            checkoutService.OpenCheck();
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
+            checkoutService.AddOffer(new BonusOffer(new Flat(20), new TotalCostCondition(10), expirationDate));
+            check = checkoutService.CloseCheck();
+            Assert.Equal(30, check.GetTotalPoints());
+        }
+
+        [Fact]
+        public void UseFactorAndFlatBonusOffer_ByCategory()
+        {
+            checkoutService.OpenCheck();
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
+            checkoutService.AddOffer(new BonusOffer(new Factor(Category.Milk, 2), new CategoryCondition(Category.Milk), expirationDate));
+            checkoutService.AddOffer(new BonusOffer(new Flat(3), new TotalCostCondition(10), DateTime.Now));
+            check = checkoutService.CloseCheck();
+            Assert.Equal(20, check.GetTotalPoints());
+        }
+
     }
 }

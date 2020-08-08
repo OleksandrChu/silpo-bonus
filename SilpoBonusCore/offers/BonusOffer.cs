@@ -1,6 +1,8 @@
 using System;
 using SilpoBonusCore.checkout;
+using SilpoBonusCore.condition;
 using SilpoBonusCore.models;
+using SilpoBonusCore.rewards;
 
 namespace SilpoBonusCore.offers
 {
@@ -8,22 +10,23 @@ namespace SilpoBonusCore.offers
     {
         int price;
         private Product product;
+        private IReward reward;
 
-        public BonusOffer(int price, Product product, DateTime expirationDate)
+        public BonusOffer(IReward reward, ICondition condition, DateTime expirationDate)
         {
+            this.reward = reward;
+            this.condition = condition;
             this.expirationDate = expirationDate;
-            this.price = price;
-            this.product = product;
         }
+
         public override void Apply(Check check)
         {
-            check.AddProduct(new Product(price, product.name));
+            check.AddPoints(reward.CalcPoints(check));
         }
 
         public override bool IsSatisfyCondition(Check check)
         {
-            int cost = check.GetCostByCategory(product.category);
-            return cost > 0;
+            return condition.Check(check);
         }
     }
 }

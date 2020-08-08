@@ -1,6 +1,7 @@
 using System;
 using SilpoBonusCore.checkout;
 using SilpoBonusCore.models;
+using SilpoBonusCore.rewards;
 
 namespace SilpoBonusCore.offers
 {
@@ -9,7 +10,6 @@ namespace SilpoBonusCore.offers
         private int percent;
         private Category category;
         private int cost;
-
         public DiscountOffer(int percent, Category category, DateTime expirationDate)
         {
             this.percent = percent;
