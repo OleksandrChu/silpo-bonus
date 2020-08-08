@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using SilpoBonusCore.offers;
 using SilpoBonusCore.models;
+using SilpoBonusCore.discount;
 
 namespace SilpoBonusCore.checkout
 {
@@ -21,7 +22,7 @@ namespace SilpoBonusCore.checkout
 
         internal void AddPoints(int points) => this.points += points;
 
-        internal void AddDiscount(int discount) => this.discount = discount;
+        internal void AddDiscount(Discount discount) => this.discount = discount.GetValue();
 
         internal int GetCostByCategory(Category category)
         {

@@ -1,5 +1,7 @@
 using System;
 using SilpoBonusCore.checkout;
+using SilpoBonusCore.condition;
+using SilpoBonusCore.discount;
 using SilpoBonusCore.models;
 using SilpoBonusCore.rewards;
 
@@ -10,22 +12,23 @@ namespace SilpoBonusCore.offers
         private int percent;
         private Category category;
         private int cost;
-        public DiscountOffer(int percent, Category category, DateTime expirationDate)
+        private IDiscountRule discountRule;
+
+        public DiscountOffer(IDiscountRule discountRule, ICondition condition, DateTime expirationDate)
         {
-            this.percent = percent;
-            this.category = category;
+            this.discountRule = discountRule;
+            this.condition = condition;
             this.expirationDate = expirationDate;
         }
 
         public override void Apply(Check check)
         {
-            check.AddDiscount(cost * percent / 100);
+            check.AddDiscount(discountRule.CalcDiscount(check));
         }
 
         public override bool IsSatisfyCondition(Check check)
         {
-            cost = check.GetCostByCategory(category);
-            return cost > 0;
+            return condition.Check(check);
         }
     }
 }

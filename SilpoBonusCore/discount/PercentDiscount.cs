@@ -1,12 +1,22 @@
 using SilpoBonusCore.checkout;
+using SilpoBonusCore.models;
 
 namespace SilpoBonusCore.discount
 {
-    public class PercentDiscount : IDiscountRule
+    public class PercentDiscount : Discount
     {
-        public Discount CalcDiscount(Check check)
+        private int percent;
+        private Category category;
+
+        public PercentDiscount(int percent, Category category)
         {
-            return new Discount();
+            this.percent = percent;
+            this.category = category;
+        }
+
+        protected override void SetDiscount(Check check)
+        {
+           discount = check.GetCostByCategory(category) * percent / 100;
         }
     }
 }

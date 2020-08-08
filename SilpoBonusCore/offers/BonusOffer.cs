@@ -8,8 +8,6 @@ namespace SilpoBonusCore.offers
 {
     public class BonusOffer : Offer
     {
-        int price;
-        private Product product;
         private IReward reward;
 
         public BonusOffer(IReward reward, ICondition condition, DateTime expirationDate)
