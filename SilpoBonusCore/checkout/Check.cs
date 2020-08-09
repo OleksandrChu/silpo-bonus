@@ -27,8 +27,8 @@ namespace SilpoBonusCore.checkout
         internal int GetCostByCategory(Category category)
         {
             return products
-            .Where(product => product.category.Equals(category))
-            .Sum(product => product.price);
+                .Where(product => product.category.Equals(category))
+                .Sum(product => product.price);
         }
 
         internal void AddOffer(Offer offer) => offers.Add(offer);

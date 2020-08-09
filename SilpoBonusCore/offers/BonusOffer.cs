@@ -1,7 +1,6 @@
 using System;
 using SilpoBonusCore.checkout;
 using SilpoBonusCore.condition;
-using SilpoBonusCore.models;
 using SilpoBonusCore.rewards;
 
 namespace SilpoBonusCore.offers

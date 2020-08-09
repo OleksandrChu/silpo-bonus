@@ -75,7 +75,7 @@ namespace SilpoBonusCore.Tests
             checkoutService.OpenCheck();
             checkoutService.AddProduct(milk);
             checkoutService.AddProduct(bread);
-            checkoutService.AddOffer(new AnyGoodOffer(7, 10, DateTime.Now));
+            checkoutService.AddOffer(new BonusOffer(new Flat(10), new TotalCostCondition(5), DateTime.Now));
             check = checkoutService.CloseCheck();
             Assert.Equal(20, check.GetTotalPoints());
         }
@@ -98,10 +98,10 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(milk);
             checkoutService.AddProduct(milk);
             checkoutService.AddProduct(bread);
-            checkoutService.AddOffer(new FactorByCategoryOffer(Category.Milk, 3, expirationDate));
-            checkoutService.AddOffer(new AnyGoodOffer(40, 5, expirationDate));
+            checkoutService.AddOffer(new BonusOffer(new Factor(Category.Milk, 2), new CategoryCondition(Category.Milk), expirationDate));
+            checkoutService.AddOffer(new BonusOffer(new Flat(5), new TotalCostCondition(15), expirationDate));
             check = checkoutService.CloseCheck();
-            Assert.Equal(45, check.GetTotalPoints());
+            Assert.Equal(36, check.GetTotalPoints());
         }
 
         [Fact]
@@ -111,8 +111,7 @@ namespace SilpoBonusCore.Tests
             checkoutService.AddProduct(milk);
             checkoutService.AddProduct(milk);
             checkoutService.AddProduct(bread);
-            checkoutService.AddOffer(new FactorByTradeOffer(Trade.VoloshkolePole, 2, expirationDate));
-
+            checkoutService.AddOffer(new BonusOffer(new Factor(Category.Milk, 2), new TradeCondition(Trade.VoloshkolePole), expirationDate));
             check = checkoutService.CloseCheck();
             Assert.Equal(31, check.GetTotalPoints());
         }
