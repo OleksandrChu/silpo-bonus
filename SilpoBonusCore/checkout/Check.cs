@@ -11,6 +11,7 @@ namespace SilpoBonusCore.checkout
     {
         private List<Product> products = new List<Product>();
         private List<Offer> offers = new List<Offer>();
+
         private int points = 0;
         private int discount = 0;
 
@@ -30,6 +31,8 @@ namespace SilpoBonusCore.checkout
                 .Where(product => product.category.Equals(category))
                 .Sum(product => product.price);
         }
+
+        internal int GetProductsCount() => products.Count();
 
         internal void AddOffer(Offer offer) => offers.Add(offer);
 

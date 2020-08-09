@@ -174,5 +174,16 @@ namespace SilpoBonusCore.Tests
             Assert.Equal(20, check.GetTotalPoints());
         }
 
+        [Fact]
+        public void UseFactorAndFlatBonusOffer_WhereCountGraterOrEqual_2()
+        {
+            checkoutService.OpenCheck();
+            checkoutService.AddProduct(milk);
+            checkoutService.AddProduct(bread);
+            checkoutService.AddOffer(new BonusOffer(new Flat(10), new CountCondition(2), expirationDate));
+            check = checkoutService.CloseCheck();
+            Assert.Equal(20, check.GetTotalPoints());
+        }
+
     }
 }
