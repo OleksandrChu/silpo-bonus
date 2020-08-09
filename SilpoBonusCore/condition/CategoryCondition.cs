@@ -13,9 +13,6 @@ namespace SilpoBonusCore.condition
             this.category = category;
         }
 
-        public bool Check(Check check)
-        {
-            return check.GetCostByCategory(category) > 0;
-        }
+        public bool Check(Check check) => check.GetCostByCategory(category) > 0;
     }
 }

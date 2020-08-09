@@ -21,9 +21,6 @@ namespace SilpoBonusCore.offers
             check.AddPoints(reward.CalcPoints(check));
         }
 
-        public override bool IsSatisfyCondition(Check check)
-        {
-            return condition.Check(check);
-        }
+        public override bool IsSatisfyCondition(Check check) => condition.Check(check);
     }
 }

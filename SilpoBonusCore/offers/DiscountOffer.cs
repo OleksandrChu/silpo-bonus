@@ -26,9 +26,6 @@ namespace SilpoBonusCore.offers
             check.AddDiscount(discountRule.CalcDiscount(check));
         }
 
-        public override bool IsSatisfyCondition(Check check)
-        {
-            return condition.Check(check);
-        }
+        public override bool IsSatisfyCondition(Check check) => condition.Check(check);
     }
 }

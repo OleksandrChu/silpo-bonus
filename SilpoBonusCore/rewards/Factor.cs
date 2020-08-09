@@ -20,9 +20,6 @@ namespace SilpoBonusCore.rewards
             this.factor = factor;
         }
 
-        public int CalcPoints(Check check)
-        {
-            return check.GetCostByCategory(category) * (this.factor - 1);
-        }
+        public int CalcPoints(Check check) => check.GetCostByCategory(category) * (this.factor - 1);
     }
 }

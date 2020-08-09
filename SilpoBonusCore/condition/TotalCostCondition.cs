@@ -11,9 +11,6 @@ namespace SilpoBonusCore.condition
             this.cost = cost;
         }
 
-        public bool Check(Check check)
-        {
-            return check.GetTotalCost() >= cost;
-        }
+        public bool Check(Check check) => check.GetTotalCost() >= cost;
     }
 }

@@ -12,9 +12,6 @@ namespace SilpoBonusCore.condition
             this.trade = trade;
         }
 
-        public bool Check(Check check)
-        {
-            return check.GetCostByTrade(trade) > 0;
-        }
+        public bool Check(Check check) => check.GetCostByTrade(trade) > 0;
     }
 }
